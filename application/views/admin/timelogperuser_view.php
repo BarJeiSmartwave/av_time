@@ -8,7 +8,7 @@
 			<a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
 		</li>
 		<li>
-			<a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Server</a>
+			<a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
 		</li>
 		<li>
 			<a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -101,68 +101,76 @@
 									"data-placement"=>"right",
 									"title"=>"View Time Logs"
 									);
-
-								foreach ($timeLogs as $value) 
+								if(count($timeLogs) == 0)
 								{
-									$logDate = date("M j", strtotime($value->logDate));
-									$logInDate = date("g:i:s A", strtotime($value->logIn));
+									echo '<td colspan="5"  id="timelog-td"> No time logs yet.</td>';
+								}
+								else
+								{
+									foreach ($timeLogs as $value) 
+									{
+										$logDate = date("M j", strtotime($value->logDate));
+										$logInDate = date("g:i:s A", strtotime($value->logIn));
 
-									if($value->logOut == "0000-00-00 00:00:00")
-									{
-										$logOutDate = "---";
-									}
-									else
-									{
-										$logOutDate = date("g:i:s A", strtotime($value->logOut));
-									}
-									if($value->breakTime == "0000-00-00 00:00:00")
-									{
-										$breakTime = "---";
-									}
-									else
-									{
-										$breakTime = date("g:i:s A", strtotime($value->breakTime));
-									}
-									if($value->lateHours == "00:00:00")
-									{
-										$lateHours = "---";
-									}
-									else
-									{
-										$lateHours = $value->lateHours;
-									}
+										if($value->logOut == "0000-00-00 00:00:00")
+										{
+											$logOutDate = "---";
+										}
+										else
+										{
+											$logOutDate = date("g:i:s A", strtotime($value->logOut));
+										}
+										if($value->breakTime == "0000-00-00 00:00:00")
+										{
+											$breakTime = "---";
+										}
+										else
+										{
+											$breakTime = date("g:i:s A", strtotime($value->breakTime));
+										}
+										if($value->lateHours == "00:00:00")
+										{
+											$lateHours = "---";
+										}
+										else
+										{
+											$lateHours = $value->lateHours;
+										}
  									// <td>".$value->logId."</td>
  										// <td id='timelog-td'>".$breakTime."</td>
  									// <td>---</td>
-									echo "<tr>
-									<td id='timelog-td'>".$logDate."</td>
-									<td id='timelog-td'>".$logInDate."</td>
-									<td id='timelog-td'>".$logOutDate."</td>
-									<td id='timelog-td'>".$lateHours."</td>
-									<td id='timelog-td'>".$value->logHours."</td>
-								</tr>";
-							}
-							?>
-						</tbody>
-						<tfoot>
-							<?php
-							foreach ($timeLogsPeriod as $value) {
+										echo "<tr>
+										<td id='timelog-td'>".$logDate."</td>
+										<td id='timelog-td'>".$logInDate."</td>
+										<td id='timelog-td'>".$logOutDate."</td>
+										<td id='timelog-td'>".$lateHours."</td>
+										<td id='timelog-td'>".$value->logHours."</td>
+									</tr>";
+								}
+								?>
+							</tbody>
+							<tfoot>
+								<?php
+								foreach ($timeLogsPeriod as $value) {
  										// <th colspan='4' id='timelog-td' style='color: red'>".$value->monthYear."</th>
-								echo "
-								<tr>
-									<th colspan='3' id='timelog-td' style='color: red'>TOTAL:</th>
-									<th id='timelog-td' style='color: red'>".$value->totalLateHours."</th>
-									<th id='timelog-td' style='color: red'>".$value->totalHoursPeriod."</th>
-								</tr>";
-							}
-							?>
-						</tfoot>
+									echo "
+									<tr>
+										<th colspan='3' id='timelog-td' style='color: red'>TOTAL:</th>
+										<th id='timelog-td' style='color: red'>".$value->totalLateHours."</th>
+										<th id='timelog-td' style='color: red'>".$value->totalHoursPeriod."</th>
+									</tr>";
+								}
+								?>
+							</tfoot>
+							<?php
+						}
+						?>
 					</table>
 				</div>
 				<!-- overflow div -->
 				<div>
 					<?php
-					echo anchor("time/exportToCsv/".$userData->userId, "Export to CSV file.", "class='btn btn-success'");
+					echo anchor("time/exportToCsv/".$userData->userId, "Export to CSV file.", "class='btn btn-primary'");
 					?>
 				</div>
 			</div>

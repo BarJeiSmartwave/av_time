@@ -55,7 +55,8 @@ class User extends CI_Controller
 
 		$statusCode = $this->accounts->userIsOnline($userId);
 
-		$activeIp = $this->host->searchActiveHost();
+		$networks = $this->host->viewAllIp();
+		// die('<pre>'.print_r($networks, true));
 		if($statusCode == 1 || $statusCode == 2)
 		{
 			echo "<script> alert('You are already online.'); </script>";
@@ -63,60 +64,70 @@ class User extends CI_Controller
 		}
 		else
 		{
-			if(count($activeIp)>0)
+			if(count($networks)>0)
 			{			
-				$activeHost = $activeIp->ipHostName;
+
+				// $activeHost = $activeIp->ipHostName;
 				$ipHostName = $this->host->getHostName();
-				if($activeHost != $ipHostName)
+
+				foreach($networks as $value)
 				{
-					echo '<script> alert("Error: System cannot record time log.\nReason: IP Address mismatch with IP Address set by Administrator."); </script>';
-					$this->index();
+					if($value["ipHostName"] != $ipHostName)
+					{
+						echo '<script> alert("Error: System cannot record time log.\nReason: IP Address mismatch with IP Address set by Administrator."); </script>';
+						// $this->index();
+						redirect("user", "refresh");
+					}
+					else
+					{
+						$dateTimeNow = date("Y-m-d H:i:s");
+						$dateNow = date("Y-m-d");
+						$gracePeriod = strtotime("09:30:59");
+						$timeRequired = strtotime("09:00:00");
+						$timeFormat = date("H:i:s");
+						$timeNow = strtotime($timeFormat);
+
+						if ($timeNow > $gracePeriod) 
+						{
+							$computeTime = ($timeNow - $timeRequired)/3600;
+							$hoursValue = floor($computeTime);
+							$computeMinutes = (($computeTime-floor($computeTime))*60);
+							$minutesValue =floor((($computeTime-floor($computeTime))*60));
+							$secondsValue = ($computeMinutes - $minutesValue)*60;
+							$lateHours = $hoursValue.':'.$minutesValue.':'.$secondsValue;
+
+							$arrLogData = array(
+								"userId"=>$userId,
+								"logDate"=>$dateNow, 
+								"logIn"=>$dateTimeNow,
+								"lateHours"=>$lateHours
+								);
+							$this->time->timeIn($arrLogData, $userId);
+							echo '<script> alert("Time log recorded.\nYou are late."); </script>';
+							// $this->index();
+							redirect("user", "refresh");
+						}
+						else 
+						{
+							$arrLogData = array(
+								"userId"=>$userId, 
+								"logDate"=>$dateNow, 
+								"logIn"=>$dateTimeNow
+								);
+							$this->time->timeIn($arrLogData, $userId);
+							echo "<script> alert('Time log recorded.'); </script>";
+							// $this->index();
+							redirect("user", "refresh");
+						}
+					}	
 				}
-				else
-				{
-					$dateTimeNow = date("Y-m-d H:i:s");
-					$dateNow = date("Y-m-d");
-					$gracePeriod = strtotime("09:30:59");
-					$timeRequired = strtotime("09:00:00");
-					$timeFormat = date("H:i:s");
-					$timeNow = strtotime($timeFormat);
-
-					if ($timeNow > $gracePeriod) 
-					{
-						$computeTime = ($timeNow - $timeRequired)/3600;
-						$hoursValue = floor($computeTime);
-						$computeMinutes = (($computeTime-floor($computeTime))*60);
-						$minutesValue =floor((($computeTime-floor($computeTime))*60));
-						$secondsValue = ($computeMinutes - $minutesValue)*60;
-						$lateHours = $hoursValue.':'.$minutesValue.':'.$secondsValue;
-
-						$arrLogData = array(
-							"userId"=>$userId,
-							"logDate"=>$dateNow, 
-							"logIn"=>$dateTimeNow,
-							"lateHours"=>$lateHours
-							);
-						$this->time->timeIn($arrLogData, $userId);
-						echo '<script> alert("Time log recorded.\nYou are late."); </script>';
-						$this->index();
-					}
-					else 
-					{
-						$arrLogData = array(
-							"userId"=>$userId, 
-							"logDate"=>$dateNow, 
-							"logIn"=>$dateTimeNow
-							);
-						$this->time->timeIn($arrLogData, $userId);
-						echo "<script> alert('Time log recorded.'); </script>";
-						$this->index();
-					}
-				}	
+				
 			}
 			else
 			{
 				echo '<script> alert("Error: System cannot record time log.\nReason: No active IP Address set by Administrator."); </script>';
-				$this->index();
+				// $this->index();
+				redirect("user", "refresh");
 			}
 		}			
 	}

@@ -44,19 +44,19 @@
  							<!-- col picture -->
  							<div class="col-sm-2">
  								<fieldset>
- 									<h5>Username:</h5>
+ 									<h5 style='color: #2980b9;'><i class="fa fa-user"></i> Username:</h5>
  									<?php
  									echo form_label($userDetails->userName, "class='sr-only'");
  									?>
- 									<h5>Email:</h5>
+ 									<h5 style='color: #2980b9;'><i class="fa fa-inbox"></i> Email:</h5>
  									<?php
  									echo form_label($userDetails->emailAddress, "class='sr-only'");
  									?>
- 									<h5>Contact Number:</h5>
+ 									<h5 style='color: #2980b9;'><i class="fa fa-mobile-phone"></i> Contact Number:</h5>
  									<?php
  									echo form_label($userDetails->contactNumber, "class='sr-only'");
  									?>
- 									<h5>Status:</h5>
+ 									<h5 style='color: #2980b9;'><i class="fa fa-eye"></i> Status:</h5>
  									<?php
  									$statusCode = $userDetails->statusCode;
  									if($statusCode == 1)
@@ -73,7 +73,7 @@
  										$status = "Offline";
  									}
  									echo form_label($status, "class='sr-only'");?>
- 									<h5>Total Hours:</h5>
+ 									<h5 style='color: #2980b9;'><i class="fa fa-clock-o"></i> Total Hours:</h5>
  									<?php
  									echo form_label($userDetails->totalHours, "class='sr-only'");?>
  								</fieldset>

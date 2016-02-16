@@ -5,7 +5,7 @@
       <a href="<?php echo base_url('user'); ?>"><i class="fa fa-fw fa-dashboard"></i> User </a>
     </li>
     <li class="active">
-      <a href="<?php echo base_url('user/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> My Time Logs</a>
+      <a href="<?php echo base_url('user/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
     </li>
   </ul>
 </div>
@@ -72,61 +72,72 @@
          </thead>
          <tbody>
           <?php
-          foreach ($timeLogs as $value) 
-          {
-           $logDate = date("M j", strtotime($value->logDate));
-           $logInDate = date("g:i:s A", strtotime($value->logIn));
 
-           if($value->logOut == "0000-00-00 00:00:00")
-           {
-            $logOutDate = "---";
+          if(count($timeLogs) == 0)
+          {
+            echo '<td colspan="5"  id="timelog-td"> No time logs yet.</td>';
           }
           else
           {
-            $logOutDate = date("g:i:s A", strtotime($value->logOut));
-          }
-          if($value->breakTime == "0000-00-00 00:00:00")
-          {
-            $breakTime = "---";
-          }
-          else
-          {
-            $breakTime = date("g:i:s A", strtotime($value->breakTime));
-          }
-          if($value->lateHours == "00:00:00")
-          {
-            $lateHours = "---";
-          }
-          else
-          {
-            $lateHours = $value->lateHours;
-          }
- 									// <td>".$value->logId."</td>
- 										// <td id='timelog-td'>".$breakTime."</td>
- 									// <td>---</td>
-          echo "<tr>
-          <td id='timelog-td'>".$logDate."</td>
-          <td id='timelog-td'>".$logInDate."</td>
-          <td id='timelog-td'>".$logOutDate."</td>
-          <td id='timelog-td'>".$lateHours."</td>
-          <td id='timelog-td'>".$value->logHours."</td>
-        </tr>";
-      }
-      ?>
-    </tbody>
-    <tfoot>
-     <?php
-     foreach ($timeLogsPeriod as $value) {
- 										// <th colspan='4' id='timelog-td' style='color: red'>".$value->monthYear."</th>
-      echo "
-      <tr>
-       <th colspan='3' id='timelog-td' style='color: red'>TOTAL:</th>
-       <th id='timelog-td' style='color: red'>".$value->totalLateHours."</th>
-       <th id='timelog-td' style='color: red'>".$value->totalHoursPeriod."</th>
-     </tr>";
-   }
-   ?>
- </tfoot>
+            foreach ($timeLogs as $value) 
+            {
+             $logDate = date("M j", strtotime($value->logDate));
+             $logInDate = date("g:i:s A", strtotime($value->logIn));
+
+             if($value->logOut == "0000-00-00 00:00:00")
+             {
+              $logOutDate = "---";
+            }
+            else
+            {
+              $logOutDate = date("g:i:s A", strtotime($value->logOut));
+            }
+            if($value->breakTime == "0000-00-00 00:00:00")
+            {
+              $breakTime = "---";
+            }
+            else
+            {
+              $breakTime = date("g:i:s A", strtotime($value->breakTime));
+            }
+            if($value->lateHours == "00:00:00")
+            {
+              $lateHours = "---";
+            }
+            else
+            {
+              $lateHours = $value->lateHours;
+            }
+                  // <td>".$value->logId."</td>
+                    // <td id='timelog-td'>".$breakTime."</td>
+                  // <td>---</td>
+            echo "<tr>
+            <td id='timelog-td'>".$logDate."</td>
+            <td id='timelog-td'>".$logInDate."</td>
+            <td id='timelog-td'>".$logOutDate."</td>
+            <td id='timelog-td'>".$lateHours."</td>
+            <td id='timelog-td'>".$value->logHours."</td>
+          </tr>";
+        }
+        ?>
+      </tbody>
+      <tfoot>
+       <?php
+       foreach ($timeLogsPeriod as $value) {
+                    // <th colspan='4' id='timelog-td' style='color: red'>".$value->monthYear."</th>
+        echo "
+        <tr>
+         <th colspan='3' id='timelog-td' style='color: red'>TOTAL:</th>
+         <th id='timelog-td' style='color: red'>".$value->totalLateHours."</th>
+         <th id='timelog-td' style='color: red'>".$value->totalHoursPeriod."</th>
+       </tr>";
+     }
+     ?>
+   </tfoot>
+   <?php
+ }
+ ?>
+
 </table>
 </div>
 <!-- overflow table -->

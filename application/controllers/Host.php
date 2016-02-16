@@ -39,6 +39,7 @@ class Host extends CI_Controller
 		redirect("host/viewHost", "refresh");
 	}
 
+//archived
 	public function activateIp($ipId)
 	{
 		$this->host->activateIp($ipId);
@@ -46,6 +47,7 @@ class Host extends CI_Controller
 		redirect("host/viewHost", "refresh");
 	}
 
+//archived
 	public function getActiveHost()
 	{
 		$ipActive = $this->host->searchActiveHost();
@@ -66,15 +68,14 @@ class Host extends CI_Controller
 		$userLog = $this->accounts->getSessionAdmin();
 		if(count($userLog) > 0)
 		{
-			// $userFullName["fullName"] = $userLog->firstName." ".$userLog->lastName;
 			$userFirstName["firstName"] = $userLog->firstName;
 			$title = array(
-				"title"=>"Server"
+				"title"=>"Network"
 				);
 
 			$allIp = $this->host->viewAllIp();
 			$ipData["results"] = $allIp;
-
+			// die('<pre>'.print_r($ipData, true));
 			$activeIp = $this->getActiveHost();
 			$ipActive["ipDetails"] = $activeIp;
 
@@ -89,11 +90,19 @@ class Host extends CI_Controller
 			redirect("login", "refresh");
 		}
 	}
-
+	
+//archived
 	public function unsetIp($ipHostName)
 	{
 		$this->host->unsetIp($ipHostName);
 		echo "<script> alert('Active IP address removed.'); </script>";
+		redirect("host/viewHost", "refresh");
+	}
+
+	public function deleteIp($ipId)
+	{
+		$this->host->deleteIp($ipId);
+		echo '<script> alert("Network removed from valid list."); </script>';
 		redirect("host/viewHost", "refresh");
 	}
 }

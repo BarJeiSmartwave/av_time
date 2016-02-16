@@ -8,7 +8,7 @@
       <a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
     </li>
     <li>
-      <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Server</a>
+      <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
     </li>
     <li>
       <a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -66,7 +66,7 @@
 
   $timeIn = '<div class="col-lg-4">
 
-  <div class="panel panel-green">
+  <div class="panel panel-primary">
    <div class="panel-heading">
     <div class="row">
      <div class="col-xs-3">
@@ -113,7 +113,7 @@ $timeOut = '<div class="col-lg-4">
 </div>';
 
 $goToBreak = '<div class="col-lg-4">
-<div class="panel panel-primary">
+<div class="panel panel-green">
   <div class="panel-heading">
    <div class="row">
     <div class="col-xs-3">
@@ -136,7 +136,7 @@ $goToBreak = '<div class="col-lg-4">
 </div>';
 
 $endBreak = '<div class="col-lg-4">
-<div class="panel panel-primary">
+<div class="panel panel-green">
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-xs-3">

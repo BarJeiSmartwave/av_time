@@ -58,7 +58,7 @@
 			$endBreakUrl = base_url("user/endBreak");
 
 			$timeIn = '<div class="col-lg-4">
-			<div class="panel panel-green">
+			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<div class="row">
 						<div class="col-xs-3">
@@ -105,7 +105,7 @@
 </div>';
 
 $goToBreak = '<div class="col-lg-4">
-<div class="panel panel-primary">
+<div class="panel panel-green">
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-xs-3">
@@ -128,7 +128,7 @@ $goToBreak = '<div class="col-lg-4">
 </div>';
 
 $endBreak = '<div class="col-lg-4">
-<div class="panel panel-primary">
+<div class="panel panel-green">
 	<div class="panel-heading">
 		<div class="row">
 			<div class="col-xs-3">

@@ -22,19 +22,29 @@
 <!-- data table -->
 <script>
     $('#timeIn').on('click', function () {
-        return confirm('Confirm time in.');
+        return confirm('You are about to time in.');
     });
     $('#timeOut').on('click', function () {
-        return confirm('Confirm time out.');
+        return confirm('Are you sure to time out?');
     });
     $('#goToBreak').on('click', function () {
-        return confirm('Confirm start break.');
+        return confirm('You are about to start break.');
     });
     $('#endBreak').on('click', function () {
-        return confirm('Confirm end break.');
+        return confirm('Are you sure to end break?');
     });
+    //time functions
+    $('#btnPicture').on('click', function () {
+        return confirm('Upload and change your picture?');
+    });
+    $('#btnUser').on('click', function () {
+        return confirm('Save changes and update your user details?');
+    });
+    $('#btnAccount').on('click', function () {
+        return confirm('Save changes and update your account details?');
+    });
+    // edit profile
 </script>
-<script></script>
 </body>
 
 </html>

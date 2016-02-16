@@ -10,13 +10,11 @@ class Host_model extends CI_Model
 
 	public function viewAllIp()
 	{
-		$allIpAdd = $this->db->select()
-		->from("tbl_ipaddress")
-		->where("isActive", 0)
-		->get();
-		return $allIpAdd->result();
+		$allIpAdd = $this->db->get("tbl_ipaddress");
+		return $allIpAdd->result_array();
 	}
 
+//archived
 	public function activateIp($ipId)
 	{
 		$this->db->set("isActive", 0)
@@ -29,27 +27,34 @@ class Host_model extends CI_Model
 
 	}
 
+//archived
 	public function searchActiveHost()
 	{
 		$ipQuery = $this->db->select()
 		->from("tbl_ipaddress")
-		->where("isActive", 1)
 		->get();
 		
 		return $ipQuery->row();
 	}
 
+//archived
 	public function unsetIp($ipHostName)
 	{
 		$this->db->set("isActive", 0)
 		->where("ipHostName", $ipHostName)
 		->update("tbl_ipaddress");
 	}
-	
+
 	public function getHostName()
 	{
 		$inputIpAddress = $this->input->ip_address();
 		$ipHostName = gethostbyaddr($inputIpAddress);
 		return $ipHostName;
+	}
+
+	public function deleteIp($ipId)
+	{
+		$this->db->where("ipId", $ipId)
+		->delete("tbl_ipaddress");
 	}
 }

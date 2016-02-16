@@ -8,7 +8,7 @@
       <a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
     </li>
     <li>
-      <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Server</a>
+      <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
     </li>
     <li>
       <a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -94,10 +94,16 @@
            "title"=>"View Time Logs"
            );
 
-          $logId = 0;
-
-          foreach ($timeLogs as $value) 
+          if(count($timeLogs) == 0)
           {
+            echo '<td colspan="5"  id="timelog-td"> No time logs yet.</td>';
+          }
+          else
+          {
+           $logId = 0;
+
+           foreach ($timeLogs as $value) 
+           {
             $logId++;
 
             $logDate = date("M j", strtotime($value->logDate));
@@ -127,9 +133,9 @@
             {
               $lateHours = $value->lateHours;
             }
- 									// <td>".$value->logId."</td>
- 									// <td id='timelog-td'>".$breakTime."</td>
- 									// <td>---</td>
+                  // <td>".$value->logId."</td>
+                  // <td id='timelog-td'>".$breakTime."</td>
+                  // <td>---</td>
             echo "<tr>
             <td id='timelog-td'>".$logId."</td>
             <td id='timelog-td'>".anchor("time/viewperuser/".$value->userId, $value->firstName." ".$value->lastName, $anchorViewUser)."</td>
@@ -140,16 +146,17 @@
             <td id='timelog-td'>".$value->logHours."</td>
           </tr>";
         }
-        ?>
-      </tbody>
-    </table>
-  </div>
-  <!-- overflow div -->
-  <div>
-   <?php 
-   echo anchor("admin/exportToCsv/", "Export to CSV file.", "class='btn btn-success'");
-   ?>
- </div>
+      }
+      ?> 
+    </tbody>
+  </table>
+</div>
+<!-- overflow div -->
+<div>
+ <?php 
+ echo anchor("admin/exportToCsv/", "Export to CSV file.", "class='btn btn-primary'");
+ ?>
+</div>
 </div>
 </div>
 </div>
