@@ -12,4 +12,9 @@ class Login_model extends CI_Model
 		->get();
 		return $userData->row();
 	}
+
+	public function userIsDeleted($userId)
+	{
+
+	}
 }

@@ -30,19 +30,19 @@
         </div><!-- /.row -->
         <div class="row">
             <div class="col-lg-6">
-             <div class="panel panel-default">
+               <div class="panel panel-default">
                 <div class="panel-heading">
                     <!-- <h3 class="panel-title"><i class="fa fa-image fa-fw"></i> Profile Picture </h3> -->
                     <a href="#" data-toggle="collapse" data-target="#profilePicture" style="color: #000000"><i class="fa fa-fw fa-image"></i> Profile Picture <i class="fa fa-fw fa-caret-down"></i></a>
                 </div>
                 <div class="panel-body collapse" id="profilePicture">
 
-                 <div style="overflow-x:auto"> 
-                     <?php
-                     echo form_open_multipart('user/saveProfilePicture');
-                     ?>
-                     <fieldset>
-                         <table>
+                   <div style="overflow-x:auto"> 
+                       <?php
+                       echo form_open_multipart('user/saveProfilePicture');
+                       ?>
+                       <fieldset>
+                           <table>
                             <tr>
                                 <td>
                                     <img src="<?php echo base_url('uploads/'.$userDetails->imageCode); ?>" alt="Profile Picture" width="185" height="185"> 
@@ -180,64 +180,66 @@
                 <?php
                 echo form_open("user/saveAccountDetails");
                 ?>
-                <fieldset>
-                    <?php
-                    $txtUsername = [
-                    "name"=>"txtUsername",
-                    "id"=>"txtUsername",
-                    "style"=>"width:185px;",
-                    "class"=>"form-control",
-                    "placeholder"=>"Username",
-                    "required"=>"required",
-                    "value"=>$userDetails->userName
-                    ];
-                    $txtPassword = [
-                    "name"=>"txtPassword",
-                    "id"=>"txtPassword",
-                    "style"=>"width:185px;",
-                    "class"=>"form-control",
-                    "placeholder"=>"Minimum of 8 characters",
-                    "required"=>"required"
-                    ];
-                    ?>
-                    <table class="table-condensed table-responsive">
-                        <tr>                                     
-                            <td> 
-                                <div class="form-group">
-                                    <?php
+                <div style="overflow-x:auto"> 
+                    <fieldset>
+                        <?php
+                        $txtUsername = [
+                        "name"=>"txtUsername",
+                        "id"=>"txtUsername",
+                        "style"=>"width:185px;",
+                        "class"=>"form-control",
+                        "placeholder"=>"Username",
+                        "required"=>"required",
+                        "value"=>$userDetails->userName
+                        ];
+                        $txtPassword = [
+                        "name"=>"txtPassword",
+                        "id"=>"txtPassword",
+                        "style"=>"width:185px;",
+                        "class"=>"form-control",
+                        "placeholder"=>"Minimum of 8 characters",
+                        "required"=>"required"
+                        ];
+                        ?>
+                        <table class="table-condensed table-responsive">
+                            <tr>                                     
+                                <td> 
+                                    <div class="form-group">
+                                        <?php
 
-                                    echo form_label("New Username", "txtUsername");
-                                    echo form_input($txtUsername, set_value($userDetails->userName));
+                                        echo form_label("New Username", "txtUsername");
+                                        echo form_input($txtUsername, set_value($userDetails->userName));
+                                        ?>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <?php
+                                        echo form_label("New Password", "txtPassword");
+                                        echo form_password($txtPassword, set_value("txtPassword"));
+                                        ?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                  <div class="form-group">
+                                    <?php
+                                    echo form_reset("btnReset", "Revert", "class='btn btn-default btn-block'"); 
                                     ?>
-                                </div>
+                                </div> 
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <?php
-                                    echo form_label("New Password", "txtPassword");
-                                    echo form_password($txtPassword, set_value("txtPassword"));
+                                    <?php 
+                                    echo form_submit("btnSubmit", "Save Changes", ["class"=>"btn btn-primary btn-block", "id"=>"btnAccount"]);
                                     ?>
                                 </div>
-                            </td>
+                            </td>                                           
                         </tr>
-                        <tr>
-                            <td>
-                              <div class="form-group">
-                                <?php
-                                echo form_reset("btnReset", "Revert", "class='btn btn-default btn-block'"); 
-                                ?>
-                            </div> 
-                        </td>
-                        <td>
-                            <div class="form-group">
-                                <?php 
-                                echo form_submit("btnSubmit", "Save Changes", ["class"=>"btn btn-primary btn-block", "id"=>"btnAccount"]);
-                                ?>
-                            </div>
-                        </td>                                           
-                    </tr>
-                </table>
-            </fieldset>
+                    </table>
+                </fieldset>
+            </div>
         </div>
     </div>
 </div>

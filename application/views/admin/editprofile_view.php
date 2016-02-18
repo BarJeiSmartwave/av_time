@@ -5,10 +5,10 @@
             <a href="<?php echo base_url('admin'); ?>"><i class="fa fa-fw fa-dashboard"></i> Admin </a>
         </li>
         <li>
-            <a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
+            <a href="<?php echo base_url('time'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
         </li>
         <li>
-            <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
+            <a href="<?php echo base_url('host'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
         </li>
         <li>
             <a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -17,7 +17,7 @@
                     <a href="<?php echo base_url('accounts/viewAdd'); ?>">Add</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('accounts/viewUsers'); ?>">View</a>
+                    <a href="<?php echo base_url('accounts'); ?>">View</a>
                 </li>
             </ul>
         </li>
@@ -29,7 +29,7 @@
 <div id="page-wrapper">
     <div class="container-fluid">
         <div class="row"><!-- Page Heading -->
-            <div class="col-lg-12">
+            <div class="col-lg-7">
                 <h1 class="page-header">
                     <?php echo $userDetails->firstName; ?> <small><?php echo $userDetails->lastName; ?></small>
                 </h1>
@@ -42,43 +42,61 @@
                     </li>
                 </ol> -->
             </div>
-        </div>
-        <!-- /.row -->
-        <div class="row">
-            <div class="col-lg-6">
-             <div class="panel panel-default">
+            <div class="col-lg-5">
+             <div>
                 <div class="panel-heading">
-                    <!-- <h3 class="panel-title"><i class="fa fa-image fa-fw"></i> Profile Picture </h3> -->
-                    <a href="#" data-toggle="collapse" data-target="#profilePicture" style="color: #000000"><i class="fa fa-fw fa-image"></i> Profile Picture <i class="fa fa-fw fa-caret-down"></i></a>
-                </div>
-                <div class="panel-body collapse" id="profilePicture">
-                 <div style="overflow-x:auto"> 
-                     <?php
-                     echo form_open_multipart('admin/saveProfilePicture');
-                     ?>
-                     <fieldset>
-                         <table>
-                            <tr>
-                                <td>
-                                    <img src="<?php echo base_url('uploads/'.$userDetails->imageCode); ?>" alt="Profile Picture" width="185" height="185"> 
-                                </td>
-                                <td>
-                                 <div>
-                                    <input type="file" name="userImage" style="width:185px;"/>
-                                    <?php
-                                    echo form_submit("btnSubmit", "Upload", ["class"=>"btn btn-primary", "style"=>"width:185px;", "id"=>"btnPicture"]);
-                                    ?>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                </fieldset>
-                <?php 
-                echo form_close();
-                ?>
-            </div>
+                   <div class="row">
+                      <div class="col-xs-3">
+                         <i class=""></i>
+                     </div>
+                     <div class="col-xs-9 text-right">
+                      <div class="huge">
+                         <span id="clock">&nbsp</span>
+                     </div>
+                     <div><?php echo date("D, j M Y"); ?></div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ <!-- clock -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-6">
+       <div class="panel panel-default">
+        <div class="panel-heading">
+            <!-- <h3 class="panel-title"><i class="fa fa-image fa-fw"></i> Profile Picture </h3> -->
+            <a href="#" data-toggle="collapse" data-target="#profilePicture" style="color: #000000"><i class="fa fa-fw fa-image"></i> Profile Picture <i class="fa fa-fw fa-caret-down"></i></a>
         </div>
+        <div class="panel-body collapse" id="profilePicture">
+           <div style="overflow-x:auto"> 
+               <?php
+               echo form_open_multipart('admin/saveProfilePicture');
+               ?>
+               <fieldset>
+                   <table>
+                    <tr>
+                        <td>
+                            <img src="<?php echo base_url('uploads/'.$userDetails->imageCode); ?>" alt="Profile Picture" width="185" height="185"> 
+                        </td>
+                        <td>
+                           <div>
+                            <input type="file" name="userImage" style="width:185px;"/>
+                            <?php
+                            echo form_submit("btnSubmit", "Upload", ["class"=>"btn btn-primary", "style"=>"width:185px;", "id"=>"btnPicture"]);
+                            ?>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </fieldset>
+        <?php 
+        echo form_close();
+        ?>
     </div>
+</div>
+</div>
 </div>
 
 <div class="col-lg-6">

@@ -44,22 +44,6 @@
         return confirm('Save changes and update your account details?');
     });
     // edit profile
-    $('#deleteIp1').on('click', function () {
-        return confirm('Delete network?');
-    });
-    $('#deleteIp2').on('click', function () {
-        return confirm('Delete network?');
-    });
-    $('#deleteIp3').on('click', function () {
-        return confirm('Delete network?');
-    });
-    $('#deleteIp4').on('click', function () {
-        return confirm('Delete network?');
-    });
-    $('#deleteIp5').on('click', function () {
-        return confirm('Delete network?');
-    });
-    //delete ip
 </script>
 </body>
 </html>

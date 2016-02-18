@@ -58,7 +58,7 @@ class Admin extends CI_Controller
 		if($statusCode == 1 || $statusCode == 2)
 		{
 			echo "<script> alert('You are already online!'); </script>";
-			$this->index();
+			redirect("admin", "refresh");
 		}
 		else
 		{
@@ -87,7 +87,7 @@ class Admin extends CI_Controller
 					);
 				$this->time->timeIn($arrLogData, $userId);
 				echo '<script> alert("Time log recorded.\nYou are late."); </script>';
-				$this->index();
+				redirect("admin", "refresh");
 			}
 			else 
 			{
@@ -98,7 +98,7 @@ class Admin extends CI_Controller
 					);
 				$this->time->timeIn($arrLogData, $userId);
 				echo "<script> alert('Time log recorded.'); </script>";
-				$this->index();
+				redirect("admin", "refresh");
 			}
 		}
 	}
@@ -226,6 +226,25 @@ class Admin extends CI_Controller
 				"title"=>$displayName
 				);
 			$userData["userDetails"] = $userLog;
+
+			// $imageFrame = base_url('assets/images/frames.png');
+			// $image = base_url('uploads/'.$userLog->imageCode);
+
+			// $top = imagecreatefrompng($imageFrame);
+			// $bottom = imagecreatefrompng($image);
+
+			// list($top_width, $top_height) = getimagesize($imageFrame);
+			// list($bottom_width, $bottom_height) = getimagesize($image);
+
+			// $new_width = ($top_width > $bottom_width) ? $top_width : $bottom_width;
+			// $new_height = $top_height + $bottom_height;
+
+			// $new = imagecreate($new_width, $new_height);
+			// imagecopy($new, $top, 0, 0, 0, 0, $top_width, $top_height);
+			// imagecopy($new, $bottom, 0, $top_height+1, 0, 0, $bottom_width, $bottom_height);
+
+			// // save to file
+			// imagepng($new, './uploads/newImage.png');
 
 			$this->load->view("admin/header", $title);
 			$this->load->view("admin/sidebar", $userFirstName);

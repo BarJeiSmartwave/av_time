@@ -5,10 +5,10 @@
       <a href="<?php echo base_url('admin'); ?>"><i class="fa fa-fw fa-dashboard"></i> Admin </a>
     </li>
     <li>
-      <a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
+      <a href="<?php echo base_url('time'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
     </li>
     <li>
-      <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
+      <a href="<?php echo base_url('host'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
     </li>
     <li class="active">
       <a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -17,7 +17,7 @@
           <a href="<?php echo base_url('accounts/viewAdd'); ?>">Add</a>
         </li>
         <li>
-          <a href="<?php echo base_url('accounts/viewUsers'); ?>">View</a>
+          <a href="<?php echo base_url('accounts'); ?>">View</a>
         </li>
       </ul>
     </li>
@@ -30,7 +30,7 @@
   <div class="container-fluid">
    <!-- Page Heading -->
    <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-7">
      <h1 class="page-header">
       Users 
       <small>View</small>
@@ -44,72 +44,98 @@
  					</li>
  				</ol> -->
  			</div>
- 		</div>
- 		<!-- page heading -->
- 		<div class="row">
- 			<div class="col-lg-12">
- 				<div class="panel panel-default">
- 					<div class="panel-heading">
- 						<h3 class="panel-title"><i class="fa fa-table"></i> Personal Data Sheet</h3>
- 					</div>
- 					<div class="panel-body">
- 						<div style="overflow-x:auto;">
- 							<table class="table table-bordered table-hover" id="dataTable">
- 								<thead>
- 									<tr style="background-color: #ff4f73; color: #ffffff;">
- 										<th id="timelog-th">#</th>
- 										<th id="timelog-th">Name</th>
- 										<th id="timelog-th">Username</th>
- 										<th id="timelog-th">Contact #</th>
- 										<th id="timelog-th">Email Address</th>
- 										<th id="timelog-th">Status</th>
- 										<!-- <th>Total Hours</th> -->
- 									</tr>
- 								</thead>
- 								<tbody>
- 									<?php
- 									$anchorViewUser = array(
- 										"data-toggle"=>"tooltip",
- 										"data-placement"=>"right",
- 										"title"=>"View Time Logs"
- 										);
+      <div class="col-lg-5">
+       <div>
+        <div class="panel-heading">
+         <div class="row">
+          <div class="col-xs-3">
+           <i class=""></i>
+         </div>
+         <div class="col-xs-9 text-right">
+          <div class="huge">
+           <span id="clock">&nbsp</span>
+         </div>
+         <div><?php echo date("D, j M Y"); ?></div>
+       </div>
+     </div>
+   </div>
+ </div>
+</div>
+<!-- clock -->
+</div>
+<!-- page heading -->
+<div class="row">
+  <div class="col-lg-12">
+   <div class="panel panel-default">
+    <div class="panel-heading">
+     <h3 class="panel-title"><i class="fa fa-table"></i> Personal Data Sheet</h3>
+   </div>
+   <div class="panel-body">
+     <div style="overflow-x:auto;">
+      <table class="table table-bordered table-hover" id="dataTable">
+       <thead>
+        <tr style="background-color: #ff4f73; color: #ffffff;">
+         <th id="timelog-th">#</th>
+         <th id="timelog-th">Name</th>
+         <th id="timelog-th">Username</th>
+         <th id="timelog-th">Contact #</th>
+         <th id="timelog-th">Email Address</th>
+         <th id="timelog-th">Status</th>
+         <th id="timelog-th">Action</th>
+       </tr>
+     </thead>
+     <tbody>
+      <?php
+      $anchorViewUser = [
+      "data-toggle"=>"tooltip",
+      "data-placement"=>"right",
+      "title"=>"View Time Logs"
+      ];
 
- 									foreach ($usersData as $value) 
- 									{
- 										if($value->statusCode == 1)
- 										{
- 											$status = "<td style='color: blue;' id='timelog-td'>Online</td>";
- 										}
- 										elseif($value->statusCode == 0)
- 										{
- 											$status = "<td style='color: red;' id='timelog-td'>Offline</td>";
- 										}
- 										elseif($value->statusCode == 2)
- 										{
- 											$status = "<td style='color: green;' id='timelog-td'>Break</td>";
- 										}
+      $removeUser = [
+      "class"=>"fa fa-fw fa-remove", 
+      "style"=>"color: red;", 
+      "data-toggle"=>"tooltip",
+      "data-placement"=>"bottom",
+      "title"=>"Remove"
+      ];
+      foreach ($usersData as $value) 
+      {
+       if($value->statusCode == 1)
+       {
+        $status = "<td style='color: blue;' id='timelog-td'>Online</td>";
+      }
+      elseif($value->statusCode == 0)
+      {
+        $status = "<td style='color: red;' id='timelog-td'>Offline</td>";
+      }
+      elseif($value->statusCode == 2)
+      {
+        $status = "<td style='color: green;' id='timelog-td'>Break</td>";
+      }
  									// <td>".$value->totalHours."</td>
  										// <td id='timelog-td'>".$value->firstName." ".$value->lastName."</td>
- 										echo "<tr>
- 										<td id='timelog-td'>".$value->userId."</td>
- 										<td id='timelog-td'>".anchor("time/viewperuser/".$value->userId, $value->firstName." ".$value->lastName, $anchorViewUser)."</td>
- 										<td id='timelog-td'>".$value->userName."</td>
- 										<td id='timelog-td'>".$value->contactNumber."</td>
- 										<td id='timelog-td'	>".$value->emailAddress."</td>
- 										".$status."
- 									</tr>";
- 								}
- 								?>
- 							</tbody>
- 						</table>
- 					</div>
- 					<!-- table overflow -->
- 				</div>
- 			</div>
- 		</div>
- 		<!-- col 1 -->
- 	</div>
- 	<!-- row 1 -->
- </div>
- <!-- container -->
+      echo "<tr>
+      <td id='timelog-td'>".$value->userId."</td>
+      <td id='timelog-td'>".anchor("time/viewperuser/".$value->userId, $value->firstName." ".$value->lastName, $anchorViewUser)."</td>
+      <td id='timelog-td'>".$value->userName."</td>
+      <td id='timelog-td'>".$value->contactNumber."</td>
+      <td id='timelog-td' >".$value->emailAddress."</td>
+      ".$status."
+      <td id='timelog-td' >".anchor("accounts/removeuser/".$value->userId, " ", $removeUser)."</td>
+    </tr>";
+  }
+  ?>
+</tbody>
+</table>
+</div>
+<!-- table overflow -->
+</div>
+</div>
+</div>
+<!-- col 1 -->
+</div>
+<!-- row 1 -->
+</div>
+<!-- container -->
 </div>

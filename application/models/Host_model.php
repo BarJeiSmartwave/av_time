@@ -8,41 +8,24 @@ class Host_model extends CI_Model
 		$this->db->insert("tbl_ipaddress", $ipData);
 	}
 
-	public function viewAllIp()
+	public function getValidIp()
 	{
-		$allIpAdd = $this->db->get("tbl_ipaddress");
-		return $allIpAdd->result_array();
+		$validHosts = $this->db->select('*')
+		->where('isValid', 1)
+		->where('isDeleted', 0)
+		->get("tbl_ipaddress");
+
+		return $validHosts->result_array();
 	}
 
-//archived
-	public function activateIp($ipId)
+	public function getInvalidIp()
 	{
-		$this->db->set("isActive", 0)
-		->where("isActive", 1)
-		->update("tbl_ipaddress");
+		$invalidHosts = $this->db->select('*')
+		->where('isValid', 0)
+		->where('isDeleted', 0)
+		->get('tbl_ipaddress');
 
-		$this->db->set("isActive", 1)
-		->where("ipId", $ipId)
-		->update("tbl_ipaddress");
-
-	}
-
-//archived
-	public function searchActiveHost()
-	{
-		$ipQuery = $this->db->select()
-		->from("tbl_ipaddress")
-		->get();
-		
-		return $ipQuery->row();
-	}
-
-//archived
-	public function unsetIp($ipHostName)
-	{
-		$this->db->set("isActive", 0)
-		->where("ipHostName", $ipHostName)
-		->update("tbl_ipaddress");
+		return $invalidHosts->result_array();
 	}
 
 	public function getHostName()
@@ -52,9 +35,24 @@ class Host_model extends CI_Model
 		return $ipHostName;
 	}
 
+	public function removeIp($ipId)
+	{
+		$this->db->set("isValid", 0)
+		->where("ipId", $ipId)
+		->update("tbl_ipaddress");
+	}
+
 	public function deleteIp($ipId)
 	{
-		$this->db->where("ipId", $ipId)
-		->delete("tbl_ipaddress");
+		$this->db->set("isDeleted", 1)
+		->where('ipId', $ipId)
+		->update('tbl_ipaddress');
+	}
+
+	public function setAsValidIp($ipId)
+	{
+		$this->db->set("isValid", 1)
+		->where('ipId', $ipId)
+		->update('tbl_ipaddress');
 	}
 }

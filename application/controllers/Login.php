@@ -52,21 +52,30 @@ class Login extends CI_Controller
 			$userPass = $this->input->post("txtPassword");
 			$md5Pass = md5($userPass);
 			$res = $this->login->authenticateUser($userName, $md5Pass);
+
+			// die('<pre>'.print_r($res, true));
 			if (count($res) > 0) 
 			{
-				if($res->isAdmin == 1)
+				if($res->isDeleted == 1)
 				{
-					$this->session->set_userdata("adminId", $res->userId);
-					$this->session->set_userdata("adminName", $userName);
-					redirect('admin', 'refresh');
+					echo '<script> alert("User account is already deleted!"); </script>';
+					redirect('login', 'refresh');
 				}
 				else
 				{
-					$this->session->set_userdata("userId", $res->userId);
-					$this->session->set_userdata("userName", $userName);
-					redirect('user', 'refresh');
+					if($res->isAdmin == 1)
+					{
+						$this->session->set_userdata("adminId", $res->userId);
+						$this->session->set_userdata("adminName", $userName);
+						redirect('admin', 'refresh');
+					}
+					else
+					{
+						$this->session->set_userdata("userId", $res->userId);
+						$this->session->set_userdata("userName", $userName);
+						redirect('user', 'refresh');
+					}
 				}
-				
 			} 
 			else 
 			{

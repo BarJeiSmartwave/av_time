@@ -5,10 +5,10 @@
             <a href="<?php echo base_url('admin'); ?>"><i class="fa fa-fw fa-dashboard"></i> Admin </a>
         </li>
         <li>
-            <a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
+            <a href="<?php echo base_url('time'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
         </li>
         <li>
-            <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
+            <a href="<?php echo base_url('host'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
         </li>
         <li class="active">
             <a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -17,7 +17,7 @@
                     <a href="<?php echo base_url('accounts/viewAdd'); ?>">Add</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url('accounts/viewUsers'); ?>">View</a>
+                    <a href="<?php echo base_url('accounts'); ?>">View</a>
                 </li>
             </ul>
         </li>
@@ -30,7 +30,7 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Page Heading -->
-            <div class="col-lg-12">
+            <div class="col-lg-7">
                 <h1 class="page-header">
                     Users <small>Add</small>
                 </h1>
@@ -43,119 +43,137 @@
                     </li>
                 </ol> -->
             </div>
-        </div><!-- /.row -->
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title"><i class="fa fa-user-plus"></i> Fill up all fields </h3>
-                    </div>
-                    <div class="panel-body">
-                        <div id="userInput">
-                            <?php
-                            echo form_open_multipart('accounts/addUser', "id='panel_add'");
+            <div class="col-lg-5">
+             <div>
+                <div class="panel-heading">
+                   <div class="row">
+                      <div class="col-xs-3">
+                         <i class=""></i>
+                     </div>
+                     <div class="col-xs-9 text-right">
+                      <div class="huge">
+                         <span id="clock">&nbsp</span>
+                     </div>
+                     <div><?php echo date("D, j M Y"); ?></div>
+                 </div>
+             </div>
+         </div>
+     </div>
+ </div>
+ <!-- clock -->
+</div><!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-user-plus"></i> Fill up all fields </h3>
+            </div>
+            <div class="panel-body">
+                <div id="userInput">
+                    <?php
+                    echo form_open_multipart('accounts/addUser', "id='panel_add'");
+                    ?>
+                    <fieldset class="panel-body">
+                        <?php
+                        $txtFname = array(
+                            "name"=>"txtFirstName",
+                            "id"=>"txtFirstName",
+                            "style"=>"width:185px;",
+                            "class"=>"form-control",
+                            "placeholder"=>"First Name",
+                            "required"=>"required",
+                            "autofocus"=>"autofocus"
+                            );
+                        $txtLname = array(
+                            "name"=>"txtLastName",
+                            "id"=>"txtLastName",
+                            "style"=>"width:185px;",
+                            "class"=>"form-control",
+                            "placeholder"=>"Last Name",
+                            "required"=>"required"
+                            );
+                        $txtUsername = array(
+                            "name"=>"txtUsername",
+                            "id"=>"txtUsername",
+                            "style"=>"width:185px;",
+                            "class"=>"form-control",
+                            "placeholder"=>"Username",
+                            "required"=>"required"
+                            );
+                        $txtPassword = array(
+                            "name"=>"txtPassword",
+                            "id"=>"txtPassword",
+                            "style"=>"width:185px;",
+                            "class"=>"form-control",
+                            "placeholder"=>"Password",
+                            "required"=>"required"
+                            );
+                        $txtContact = array(
+                            "name"=>"txtContact",
+                            "id"=>"txtContact",
+                            "style"=>"width:185px;",
+                            "class"=>"form-control",
+                            "placeholder"=>"Contact No."
+                            );
                             ?>
-                            <fieldset class="panel-body">
-                                <?php
-                                $txtFname = array(
-                                    "name"=>"txtFirstName",
-                                    "id"=>"txtFirstName",
-                                    "style"=>"width:185px;",
-                                    "class"=>"form-control",
-                                    "placeholder"=>"First Name",
-                                    "required"=>"required",
-                                    "autofocus"=>"autofocus"
-                                    );
-                                $txtLname = array(
-                                    "name"=>"txtLastName",
-                                    "id"=>"txtLastName",
-                                    "style"=>"width:185px;",
-                                    "class"=>"form-control",
-                                    "placeholder"=>"Last Name",
-                                    "required"=>"required"
-                                    );
-                                $txtUsername = array(
-                                    "name"=>"txtUsername",
-                                    "id"=>"txtUsername",
-                                    "style"=>"width:185px;",
-                                    "class"=>"form-control",
-                                    "placeholder"=>"Username",
-                                    "required"=>"required"
-                                    );
-                                $txtPassword = array(
-                                    "name"=>"txtPassword",
-                                    "id"=>"txtPassword",
-                                    "style"=>"width:185px;",
-                                    "class"=>"form-control",
-                                    "placeholder"=>"Password",
-                                    "required"=>"required"
-                                    );
-                                $txtContact = array(
-                                    "name"=>"txtContact",
-                                    "id"=>"txtContact",
-                                    "style"=>"width:185px;",
-                                    "class"=>"form-control",
-                                    "placeholder"=>"Contact No."
-                                    );
-                                    ?>
-                                    <div style="overflow-x:auto;">
-                                        <table class="table-condensed table-responsive">
-                                            <tr>                                     
-                                                <td> 
-                                                    <div class="form-group">
-                                                        <?php
-                                                        echo form_input($txtFname, set_value("txtFirstName"));
-                                                        ?>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <?php
-                                                        echo form_input($txtLname, set_value("txtLastName"));
-                                                        ?>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <?php echo form_input($txtContact, set_value("txtContact")); ?>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                   <div class="form-group">
-                                                    <input type="email" id="txtEmail" name="txtEmail" class="form-control" placeholder="Email" size="20" required> 
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-group">
-                                                    <?php
-                                                    echo form_input($txtUsername, set_value("txtUsername"));
-                                                    ?>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <?php
-                                                    echo form_password($txtPassword);
-                                                    ?>
-                                                </div>
-                                            </td>                                           
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-group">
-                                                    Profile Picture
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group">
-                                                    <input type="file" name="userImage" style="width:185px;"/>
-                                                </div>
-                                            </td>
-                                        </tr>
+                            <div style="overflow-x:auto;">
+                                <table class="table-condensed table-responsive">
+                                    <tr>                                     
+                                        <td> 
+                                            <div class="form-group">
+                                                <?php
+                                                echo form_input($txtFname, set_value("txtFirstName"));
+                                                ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="form-group">
+                                                <?php
+                                                echo form_input($txtLname, set_value("txtLastName"));
+                                                ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <div class="form-group">
+                                                <?php echo form_input($txtContact, set_value("txtContact")); ?>
+                                            </div>
+                                        </td>
+                                        <td>
+                                         <div class="form-group">
+                                            <input type="email" id="txtEmail" name="txtEmail" class="form-control" placeholder="Email" style="width:185px;" required> 
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            <?php
+                                            echo form_input($txtUsername, set_value("txtUsername"));
+                                            ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <?php
+                                            echo form_password($txtPassword);
+                                            ?>
+                                        </div>
+                                    </td>                                           
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="form-group">
+                                            Profile Picture
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <input type="file" name="userImage" style="width:185px;"/>
+                                        </div>
+                                    </td>
+                                </tr>
                                        <!--  <tr>
                                             <td colspan="2">
 
@@ -163,15 +181,15 @@
                                         </tr> -->
                                         <tr>
                                             <td>
-                                             <div class="form-group">
-                                                 <?php
-                                                 echo form_reset("btnClear", "Clear", "class='btn btn-default btn-block'");
-                                                 ?>
+                                               <div class="form-group">
+                                                   <?php
+                                                   echo form_reset("btnClear", "Clear", "class='btn btn-default btn-block'");
+                                                   ?>
 
-                                             </div>    
-                                         </td>
-                                         <td>
-                                             <div class="form-group">
+                                               </div>    
+                                           </td>
+                                           <td>
+                                               <div class="form-group">
                                                 <?php
                                                 echo form_submit("btnSubmit", "Submit", "class='btn btn-primary btn-block'");
                                                 ?>

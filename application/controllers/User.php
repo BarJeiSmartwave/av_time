@@ -55,78 +55,75 @@ class User extends CI_Controller
 
 		$statusCode = $this->accounts->userIsOnline($userId);
 
-		$networks = $this->host->viewAllIp();
-		// die('<pre>'.print_r($networks, true));
+		$networks = $this->host->getValidIp();
 		if($statusCode == 1 || $statusCode == 2)
 		{
 			echo "<script> alert('You are already online.'); </script>";
-			$this->index();
+			redirect("user", "refresh");
 		}
 		else
 		{
-			if(count($networks)>0)
+			$networkCount = count($networks);
+			if($networkCount > 0)
 			{			
-
-				// $activeHost = $activeIp->ipHostName;
 				$ipHostName = $this->host->getHostName();
-
-				foreach($networks as $value)
+				$validNetwork= array();
+				foreach($networks as $network)
 				{
-					if($value["ipHostName"] != $ipHostName)
+					$validNetwork[] = $network["ipHostName"];
+				}
+				$matched = array_search($ipHostName, $validNetwork);
+
+				if($matched > 0)
+				{
+					$dateTimeNow = date("Y-m-d H:i:s");
+					$dateNow = date("Y-m-d");
+					$gracePeriod = strtotime("09:30:59");
+					$timeRequired = strtotime("09:00:00");
+					$timeFormat = date("H:i:s");
+					$timeNow = strtotime($timeFormat);
+
+					if ($timeNow > $gracePeriod) 
 					{
-						echo '<script> alert("Error: System cannot record time log.\nReason: IP Address mismatch with IP Address set by Administrator."); </script>';
-						// $this->index();
+						$computeTime = ($timeNow - $timeRequired)/3600;
+						$hoursValue = floor($computeTime);
+						$computeMinutes = (($computeTime-floor($computeTime))*60);
+						$minutesValue =floor((($computeTime-floor($computeTime))*60));
+						$secondsValue = ($computeMinutes - $minutesValue)*60;
+						$lateHours = $hoursValue.':'.$minutesValue.':'.$secondsValue;
+
+						$arrLogData = array(
+							"userId"=>$userId,
+							"logDate"=>$dateNow, 
+							"logIn"=>$dateTimeNow,
+							"lateHours"=>$lateHours
+							);
+						$this->time->timeIn($arrLogData, $userId);
+						echo '<script> alert("Time log recorded.\nYou are late."); </script>';
 						redirect("user", "refresh");
 					}
-					else
+					else 
 					{
-						$dateTimeNow = date("Y-m-d H:i:s");
-						$dateNow = date("Y-m-d");
-						$gracePeriod = strtotime("09:30:59");
-						$timeRequired = strtotime("09:00:00");
-						$timeFormat = date("H:i:s");
-						$timeNow = strtotime($timeFormat);
-
-						if ($timeNow > $gracePeriod) 
-						{
-							$computeTime = ($timeNow - $timeRequired)/3600;
-							$hoursValue = floor($computeTime);
-							$computeMinutes = (($computeTime-floor($computeTime))*60);
-							$minutesValue =floor((($computeTime-floor($computeTime))*60));
-							$secondsValue = ($computeMinutes - $minutesValue)*60;
-							$lateHours = $hoursValue.':'.$minutesValue.':'.$secondsValue;
-
-							$arrLogData = array(
-								"userId"=>$userId,
-								"logDate"=>$dateNow, 
-								"logIn"=>$dateTimeNow,
-								"lateHours"=>$lateHours
-								);
-							$this->time->timeIn($arrLogData, $userId);
-							echo '<script> alert("Time log recorded.\nYou are late."); </script>';
-							// $this->index();
-							redirect("user", "refresh");
-						}
-						else 
-						{
-							$arrLogData = array(
-								"userId"=>$userId, 
-								"logDate"=>$dateNow, 
-								"logIn"=>$dateTimeNow
-								);
-							$this->time->timeIn($arrLogData, $userId);
-							echo "<script> alert('Time log recorded.'); </script>";
-							// $this->index();
-							redirect("user", "refresh");
-						}
-					}	
+						$arrLogData = array(
+							"userId"=>$userId, 
+							"logDate"=>$dateNow, 
+							"logIn"=>$dateTimeNow
+							);
+						$this->time->timeIn($arrLogData, $userId);
+						echo "<script> alert('Time log recorded.'); </script>";
+						redirect("user", "refresh");
+					}
 				}
-				
+				else
+				{
+					echo '<script> alert("Error: System cannot record time log.\nReason: Your network is not in the valid list"); </script>';
+					redirect("user", "refresh");
+				}				
 			}
+			
 			else
 			{
-				echo '<script> alert("Error: System cannot record time log.\nReason: No active IP Address set by Administrator."); </script>';
-				// $this->index();
+				echo '<script> alert("Error: System cannot record time log.\nReason: There is no valid network"); </script>';
 				redirect("user", "refresh");
 			}
 		}			

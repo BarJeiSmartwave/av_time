@@ -60,7 +60,9 @@ class Accounts_model extends CI_Model
 
 	public function viewAllUsers()
 	{
-		$allUsers = $this->db->get("tbl_accounts");
+		$allUsers = $this->db->select('*')
+		->where('isDeleted', 0)
+		->get("tbl_accounts");
 		$users = $allUsers->result();
 		return $users;
 	}
@@ -72,17 +74,6 @@ class Accounts_model extends CI_Model
 		->update("tbl_accounts");
 	}
 
-	// public function getUserStatus($userId)
-	// {
-	// 	$selectUser = $this->db->select("statusCode")
-	// 	->from("tbl_accounts")
-	// 	->where("userId", $userId)
-	// 	->get();
-
-	// 	$userStatus = $selectUser->row();
-	// 	return $userStatus;
-	// }
-
 	public function countUserStatus($statusCode)
 	{
 		$usersCount = $this->db->select()
@@ -91,5 +82,12 @@ class Accounts_model extends CI_Model
 		->count_all_results();
 
 		return $usersCount;
+	}
+
+	public function removeUser($userId)
+	{
+		$this->db->set('isDeleted', 1)
+		->where('userId', $userId)
+		->update('tbl_accounts');
 	}
 }

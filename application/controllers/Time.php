@@ -13,13 +13,12 @@ class Time extends CI_Controller
 		$this->load->model("Host_model", "host");
 	}
 
-	public function viewTimeLogs()
+	public function index()
 	{
 		$userLog = $this->accounts->getSessionAdmin();
 		$timeLogs["timeLogs"] = $this->time->getTimeLogs();
 		if(count($userLog) > 0)
 		{
-			// $userFullName["fullName"] = $userLog->firstName." ".$userLog->lastName;
 			$userFirstName["firstName"] = $userLog->firstName;
 			$title = array(
 				"title"=>"Time Logs"
@@ -43,11 +42,9 @@ class Time extends CI_Controller
 		$timeLogs["timeLogs"] = $this->time->getTimeLogsOnCurrentMonth($userId);
 		$userData["userData"] = $this->accounts->getUserById($userId);
 		$datePeriods["datePeriods"] = $this->time->getDatePeriods($userId);
-		// die("<pre>".print_r($datePeriod, true));
 
 		if(count($userLog) > 0)
 		{
-			// $userFullName["fullName"] = $userLog->firstName." ".$userLog->lastName;
 			$userFirstName["firstName"] = $userLog->firstName;
 			$title = array(
 				"title"=>"Time Logs"
@@ -78,7 +75,6 @@ class Time extends CI_Controller
 
 		if(count($userLog) > 0)
 		{
-			// $userFullName["fullName"] = $userLog->firstName." ".$userLog->lastName;
 			$userFirstName["firstName"] = $userLog->firstName;
 			$title = array(
 				"title"=>"Time Logs"

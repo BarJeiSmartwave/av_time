@@ -5,10 +5,10 @@
       <a href="<?php echo base_url('admin'); ?>"><i class="fa fa-fw fa-dashboard"></i> Admin </a>
     </li>
     <li>
-      <a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
+      <a href="<?php echo base_url('time'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
     </li>
     <li class="active">
-      <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
+      <a href="<?php echo base_url('host'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
     </li>
     <li>
       <a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -17,7 +17,7 @@
           <a href="<?php echo base_url('accounts/viewAdd'); ?>">Add</a>
         </li>
         <li>
-          <a href="<?php echo base_url('accounts/viewUsers'); ?>">View</a>
+          <a href="<?php echo base_url('accounts'); ?>">View</a>
         </li>
       </ul>
     </li>
@@ -30,7 +30,7 @@
   <div class="container-fluid">
    <!-- Page Heading -->
    <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-7">
      <h1 class="page-header">
       Network 
       <!-- <small>Host names</small> -->
@@ -44,156 +44,47 @@
  					</li>
  				</ol> -->
  			</div>
- 		</div>
- 		<!-- page heading -->
- 		<div class="row">
- 			<div class="col-lg-6">
- 				<div class="panel panel-default">
- 					<div class="panel-heading">
- 						<h3 class="panel-title"><i class="fa fa-fw fa-table"></i> Valid List </h3>
- 					</div>
- 					<div class="panel-body">
-
-            <div style="overflow-x:auto;">
-              <table class="table table-striped table-bordered table-hover" id="ipTable">
-                <thead>
-                  <tr class="info">
-                    <th id='ip-th'>Host name</th>
-                    <th id='ip-th'>Description</th>
-                    <th id='ip-th'>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php
-                  if(count($results) == 0)
-                  {
-                   echo "<tr>
-                   <td colspan='3'>No records yet.</td>
-                 </tr>";
-               }
-               else
-               {
-                $loop = 0;
-                foreach($results as $value)
-                {
-                  // die('<pre>'.print_r($results, true));
-                  $loop++;
-                  $deleteIp = [
-                  "id"=>"deleteIp".$loop,
-                  "class"=>"fa fa-fw fa-remove",
-                  "style"=>"color: red;",
-                  "data-toggle"=>"tooltip",
-                  "data-placement"=>"right",
-                  "title"=>"Remove from list"
-                  ];
-                 //<td>".anchor('host/activateIp/'.$value->ipId, $value->ipHostName, $setIp)."</td>
-                  echo "<tr>
-                  <td>".$value["ipHostName"]."</td>
-                  <td>".$value["ipDescription"]."</td>
-                  <td>".anchor('host/deleteIp/'.$value["ipId"], " ", $deleteIp)."</td>
-                </tr>";
-              }
-            }
-            ?>
-          </tbody>
-        </table>
-        <!-- /.table-responsive -->
-      </div>
-      <!-- table overflow -->
-    </div>
-  </div>
+      <div class="col-lg-5">
+       <div>
+        <div class="panel-heading">
+         <div class="row">
+          <div class="col-xs-3">
+           <i class=""></i>
+         </div>
+         <div class="col-xs-9 text-right">
+          <div class="huge">
+           <span id="clock">&nbsp</span>
+         </div>
+         <div><?php echo date("D, j M Y"); ?></div>
+       </div>
+     </div>
+   </div>
+ </div>
 </div>
-<!-- col 1 -->
-<div class="col-lg-6">
+<!-- clock -->
+</div>
+<!-- page heading -->
+<div class="col-lg-4">
   <div class="panel panel-default">
    <div class="panel-heading">
-    <h3 class="panel-title"><i class="fa fa-fw fa-signal"></i> Detected </h3>
-  </div>
-  <div class="panel-body">
- 						<!-- <a href="#" data-toggle="collapse" data-target="#detectedHost" style="color: #000000"> Detected <i class="fa fa-fw fa-caret-down"></i></a>
- 					</div> -->
- 					<div class="panel-body" id="detectedHost">
- 						<?php
- 						echo form_open("host/saveip");
- 						?>
- 						<table class="table">
- 							<tr >
- 								<th style="border: none;">
- 									Host name:
- 								</th>
- 								<td style="border: none;">
- 									<?php echo $hostname; ?>
- 								</td>
- 							</tr>
- 							<tr>
- 								<th style="border: none;">
- 									IP Address:
- 								</th>
- 								<td style="border: none;">
- 									<?php echo $ipAddress; ?>
- 								</td>
- 							</tr>
- 							<tr>
- 								<th style="border: none;">
- 									Description:
- 								</th>
- 								<td style="border: none;">
- 									<?php
- 									$txtDescription = array(
- 										"name"=>"txtDescription",
- 										"id"=>"txtDescription",
- 										"class"=>"form-control",
- 										"required"=>"required"
- 										);
- 									echo form_input($txtDescription);
- 									?>
- 								</td>
- 							</tr>
- 						</table>
-
- 						<?php
- 						$btnSaveIp = array(
- 							"id"=>"btnSaveIp",
- 							"name"=>"btnSaveIp",
- 							"value"=>"Save to Database",
- 							"class"=>"btn btn-primary"
- 							);
- 						echo form_submit($btnSaveIp);
- 						echo form_close();
- 						?>
- 					</div>
- 				</div>
- 			</div>
- 			<!-- col 2 -->
- 		</div>
- 		<!-- row IP-->
-
- 	<!-- 	<div class="row">
- 			<div class="col-lg-12">
- 				<div class="panel panel-default">
- 					<div class="panel-heading">
- 						<h3 class="panel-title"> Valid List </h3>
- 					</div>
- 					<div class="panel-body">
-<?php
-            if(count($ipDetails) == 0)
-            {
-              echo "<h3>No Active Host.</h3>";
-            }
-            else
-            {
-              $unsetIp = array(
-                "class"=>"btn btn-danger",
-                );
-              
-                ?>
+     <h3 class="panel-title"><i class="fa fa-fw fa-signal"></i> Current Network </h3>
+   </div>
+   <div class="panel-body">
+            <!-- <a href="#" data-toggle="collapse" data-target="#detectedHost" style="color: #000000"> Detected <i class="fa fa-fw fa-caret-down"></i></a>
+          </div> -->
+          <div class="panel-body" id="detectedHost">
+            <?php
+            echo form_open("host/saveip");
+            ?>
+            <div style="overflow-x:auto;">
+              <fieldset>
                 <table class="table">
                   <tr >
                     <th style="border: none;">
                       Host name:
                     </th>
                     <td style="border: none;">
-                      <?php echo $ipDetails->ipHostName; ?>
+                      <?php echo $ipDetails['hostname']; ?>
                     </td>
                   </tr>
                   <tr>
@@ -201,10 +92,7 @@
                       IP Address:
                     </th>
                     <td style="border: none;">
-                      <?php 
-                      $ipNumber = long2ip($ipDetails->ipValue); 
-                      echo $ipNumber;
-                      ?>
+                      <?php echo $ipDetails['ipAddress']; ?>
                     </td>
                   </tr>
                   <tr>
@@ -212,20 +100,158 @@
                       Description:
                     </th>
                     <td style="border: none;">
-                      <?php echo $ipDetails->ipDescription; ?>
+                      <?php
+                      $txtDescription = array(
+                        "name"=>"txtDescription",
+                        "id"=>"txtDescription",
+                        "class"=>"form-control",
+                        "required"=>"required"
+                        );
+                      echo form_input($txtDescription);
+                      ?>
                     </td>
                   </tr>
                 </table>
                 <?php
-                echo anchor("host/unsetIp/".$ipDetails->ipHostName, "Delete", $unsetIp);
-              }
-              ?>
-   </div>
- </div>
-</div> -->
-<!-- row ip table-->
+                $btnSaveIp = array(
+                  "id"=>"btnSaveIp",
+                  "name"=>"btnSaveIp",
+                  "value"=>"Save to Database",
+                  "class"=>"btn btn-primary btn-block"
+                  );
+                echo form_submit($btnSaveIp);
+                ?>
+              </fieldset>
+            </div>
+            <?php
+            echo form_close();
+            ?>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- col 2 -->
+    <div class="col-lg-4">
+     <div class="panel panel-default">
+      <div class="panel-heading">
+       <h3 class="panel-title"><i class="fa fa-fw fa-star"></i> Valid List </h3>
+     </div>
+     <div class="panel-body">
+      <div style="overflow-x:auto;">
+        <table class="table table-striped table-bordered table-hover" id="ipTable">
+          <thead>
+            <tr class="info">
+              <th id='ip-th'>Host name</th>
+              <th id='ip-th'>Description</th>
+              <th id='ip-th'>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
 
+            if(count($validIp) == 0)
+            {
+             echo "<tr>
+             <td colspan='3'>No records yet.</td>
+           </tr>";
+         }
+         else
+         {
+          $loop = 0;
+          foreach($validIp as $value)
+          {
+            $loop++;
+            $removeIp = [
+            "id"=>"removeIp",
+            "class"=>"fa fa-fw fa-remove",
+            "style"=>"color: orange;",
+            "data-toggle"=>"tooltip",
+            "data-placement"=>"bottom",
+            "title"=>"Remove"
+            ];
+            echo "<tr>
+            <td>".$value["ipHostName"]."</td>
+            <td>".$value["ipDescription"]."</td>
+            <td>".anchor('host/removeIp/'.$value["ipId"], " ", $removeIp)."</td>
+          </tr>";
+        }
+      }
+      ?>
+    </tbody>
+  </table>
+  <!-- /.table-responsive -->
 </div>
+<!-- table overflow -->
+</div>
+</div>
+</div>
+<!-- col 1 -->
+<div class="row">
+  <div class="col-lg-4">
+   <div class="panel panel-default">
+    <div class="panel-heading">
+     <h3 class="panel-title"><i class='fa fa-fw fa-warning'></i> Invalid List </h3>
+   </div>
+   <div class="panel-body">
+    <div style="overflow-x:auto;">
+      <table class="table table-striped table-bordered table-hover" id="ipTable">
+        <thead>
+          <tr class="info">
+            <th id='ip-th'>Host name</th>
+            <th id='ip-th'>Description</th>
+            <th id='ip-th'>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+
+          if(count($invalidIp) == 0)
+          {
+           echo "<tr>
+           <td colspan='3'>No records yet.</td>
+         </tr>";
+       }
+       else
+       {
+        $loop = 0;
+        foreach($invalidIp as $value)
+        {
+          $loop++;
+          $deleteIp = [
+          "id"=>"deleteIp",
+          "class"=>"fa fa-fw fa-trash",
+          "style"=>"color: red;",
+          "data-toggle"=>"tooltip",
+          "data-placement"=>"bottom",
+          "title"=>"Delete"
+          ];
+          $setValid = [
+          "id"=>"setValid",
+          "class"=>"fa fa-fw fa-check",
+          "style"=>"color: green;",
+          "data-toggle"=>"tooltip",
+          "data-placement"=>"bottom",
+          "title"=>"Set as valid network"
+          ];
+          echo "<tr>
+          <td>".$value["ipHostName"]."</td>
+          <td>".$value["ipDescription"]."</td>
+          <td>".anchor('host/setValid/'.$value["ipId"], " ", $setValid)."
+           ".anchor('host/deleteIp/'.$value["ipId"], " ", $deleteIp)."</td>
+         </tr>";
+       }
+     }
+     ?>
+   </tbody>
+ </table>
+ <!-- /.table-responsive -->
+</div>
+<!-- table overflow -->
+</div>
+</div>
+</div>
+</div>
+<!-- row ip-->
 </div>
 <!-- container -->
 </div>

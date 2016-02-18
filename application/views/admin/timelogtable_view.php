@@ -5,10 +5,10 @@
       <a href="<?php echo base_url('admin'); ?>"><i class="fa fa-fw fa-dashboard"></i> Admin </a>
     </li>
     <li class="active">
-      <a href="<?php echo base_url('time/viewTimeLogs'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
+      <a href="<?php echo base_url('time'); ?>"><i class="fa fa-fw fa-clock-o"></i> Time Logs</a>
     </li>
     <li>
-      <a href="<?php echo base_url('host/viewHost'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
+      <a href="<?php echo base_url('host'); ?>"><i class="fa fa-fw fa-server"></i> Network</a>
     </li>
     <li>
       <a href="#" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-users"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
@@ -17,7 +17,7 @@
           <a href="<?php echo base_url('accounts/viewAdd'); ?>">Add</a>
         </li>
         <li>
-          <a href="<?php echo base_url('accounts/viewUsers'); ?>">View</a>
+          <a href="<?php echo base_url('accounts'); ?>">View</a>
         </li>
       </ul>
     </li>
@@ -30,7 +30,7 @@
   <div class="container-fluid">
    <!-- Page Heading -->
    <div class="row">
-    <div class="col-lg-8">
+    <div class="col-lg-7">
      <h1 class="page-header">
       Time Logs
       <small>Today</small>
@@ -44,7 +44,7 @@
  					</li>
  				</ol> -->
  			</div>
- 			<div class="col-lg-4">
+ 			<div class="col-lg-5">
  				<div>
  					<div class="panel-heading">
  						<div class="row">
@@ -96,7 +96,7 @@
 
           if(count($timeLogs) == 0)
           {
-            echo '<td colspan="5"  id="timelog-td"> No time logs yet.</td>';
+            echo '<td colspan="7"  id="timelog-td"> No time logs yet.</td>';
           }
           else
           {

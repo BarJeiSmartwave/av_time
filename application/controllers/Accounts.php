@@ -13,12 +13,33 @@ class Accounts extends CI_Controller
 		$this->load->model("Time_model", "time");
 	}
 
+	public function index()
+	{
+		$userLog = $this->accounts->getSessionAdmin();
+		if(count($userLog) > 0)
+		{
+			$userFirstName["firstName"] = $userLog->firstName;
+			$title = array(
+				"title"=>"All Users"
+				);
+			$allUsers["usersData"] = $this->accounts->viewAllUsers();
+			$this->load->view("admin/header", $title);
+			$this->load->view("admin/sidebar", $userFirstName);
+			$this->load->view("admin/users_view", $allUsers);
+			$this->load->view("admin/footer");
+		}
+		else
+		{
+			echo "<script> alert('No User Logged In!'); </script>";
+			redirect("login", "refresh");
+		}
+	}
+
 	public function viewAdd()
 	{
 		$userLog = $this->accounts->getSessionAdmin();
 		if(count($userLog) > 0)
 		{
-			// $userFullName["fullName"] = $userLog->firstName." ".$userLog->lastName;
 			$userFirstName["firstName"] = $userLog->firstName;
 			$title = array(
 				"title"=>"Add User"
@@ -79,31 +100,15 @@ class Accounts extends CI_Controller
 					);
 				$this->accounts->addUser($userData);
 				echo "<script> alert('User successfully added to database.'); </script>";
-				redirect("accounts/viewUsers", "refresh");
+				redirect("accounts", "refresh");
 			}
 		}
 	}
-	
-	public function viewUsers()
+
+	public function removeUser($userId)
 	{
-		$userLog = $this->accounts->getSessionAdmin();
-		if(count($userLog) > 0)
-		{
-			// $userFullName["fullName"] = $userLog->firstName." ".$userLog->lastName;
-			$userFirstName["firstName"] = $userLog->firstName;
-			$title = array(
-				"title"=>"All Users"
-				);
-			$allUsers["usersData"] = $this->accounts->viewAllUsers();
-			$this->load->view("admin/header", $title);
-			$this->load->view("admin/sidebar", $userFirstName);
-			$this->load->view("admin/users_view", $allUsers);
-			$this->load->view("admin/footer");
-		}
-		else
-		{
-			echo "<script> alert('No User Logged In!'); </script>";
-			redirect("login", "refresh");
-		}
+		$this->accounts->removeUser($userId);
+		echo '<script> alert("User removed from list."); </script>';
+		redirect('accounts', 'refresh');
 	}
 }

@@ -17,7 +17,7 @@
 					<a href="<?php echo base_url('accounts/viewAdd'); ?>">Add</a>
 				</li>
 				<li>
-					<a href="<?php echo base_url('accounts/viewUsers'); ?>">View</a>
+					<a href="<?php echo base_url('accounts'); ?>">View</a>
 				</li>
 			</ul>
 		</li>
